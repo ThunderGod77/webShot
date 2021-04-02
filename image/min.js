@@ -11,5 +11,7 @@ exports.minUpload = async (image) => {
       }),
     ],
   });
-  await upload(files);
+  const resp = await upload(files);
+  return resp
+
 };

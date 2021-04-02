@@ -1,5 +1,5 @@
 const result = require("dotenv").config();
-
+const { v4: uuidv4 } = require("uuid");
 const AWS = require("aws-sdk");
 
 const spacesEndpoint = new AWS.Endpoint("fra1.digitaloceanspaces.com");
@@ -15,10 +15,11 @@ const s3 = new AWS.S3({
 
 // Add a file to a Space
 exports.upload = async(body) => {
+  let name = uuidv4()
   var params = {
     Body: body,
     Bucket: process.env.BUCKET,
-    Key: "sitePhoto/exampllle.png",
+    Key: `sitePhoto/${name}.png`,
     ACL: "public-read",
   };
 
@@ -29,4 +30,5 @@ exports.upload = async(body) => {
       console.log(data);
     }
   });
+  return (`https://myspacelol.fra1.digitaloceanspaces.com/sitePhoto/${name}.png`)
 };
